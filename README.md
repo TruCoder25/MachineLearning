@@ -289,3 +289,126 @@ This is misleading because irrelevant features should not improve the model.
 
 ---
 
+## 📌 Ridge Regression-(L2 Regularization)
+
+### 🔹 Why We Use Ridge Regression  
+- **Overfitting Prevention:** In ordinary linear regression, the model can fit too closely to training data, especially when there are many features. Ridge reduces coefficient sizes, making the model simpler and more generalizable.  
+- **Handles Multicollinearity:** When features are correlated, normal regression coefficients can become unstable. Ridge stabilizes them.  
+- **Better Predictions with Many Features:** Works well even when the number of features is greater than the number of data points.
+
+
+### 🔹 When Does Overfitting Occur?  
+Overfitting happens when a model **learns the noise** in the training data instead of just the underlying patterns.  
+This usually occurs when:  
+- The model is **too complex** (too many features, high-degree polynomials).  
+- There is **too little training data** compared to the number of features.  
+- The model trains for **too many iterations** and fits every small fluctuation in the data.  
+
+In overfitting, the model performs **very well on training data** but **poorly on unseen/test data** because it fails to generalize.
+
+---
+
+**Definition:**  
+Ridge Regression is a type of **regularized linear regression** that adds a penalty term to the cost function to prevent overfitting.  
+It is particularly useful when we have **multicollinearity** (high correlation between independent variables) or when the model has too many features.  
+
+---
+
+### 🔹 Cost Function for Ridge Regression  
+The Ridge cost function modifies the **Linear Regression cost** by adding an \(L2\) penalty term:  
+
+\[
+J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( h_{\theta}(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^{n} \theta_j^2
+\]  
+
+Where:  
+- \(m\) = number of training examples  
+- \(n\) = number of features  
+- \(\theta_j\) = model coefficients (parameters)  
+- \(\lambda\) = regularization parameter (controls penalty strength)  
+- Larger \(\lambda\) → stronger penalty → smaller coefficients → less complex model  
+
+---
+
+### 🔹 Key Points:  
+- **Reduces overfitting** by shrinking large coefficients.  
+- Works well when features are correlated.  
+- Does **not** eliminate coefficients completely (unlike Lasso Regression).  
+- Best used when all features are potentially useful but need to be reduced in influence.  
+
+---
+### 🔹 To Avoid Overfitting  
+- The slope of the regression line should not be **too steep**, otherwise the model will likely overfit.  
+- To control this, Ridge Regression adds a unique parameter called **lambda**
+- **Lambda** is a hyperparameter that determines how strongly we penalize large coefficients.  
+- A higher lambda value reduces the steepness of the slope more aggressively, helping the model generalize better to unseen data.
+
+
+**Example Use Case:**  
+Predicting house prices where multiple features like square footage, number of bedrooms, and lot size may be correlated. Ridge helps stabilize the model.
+
+
+## 📌 Lasso Regression – (L1 Regularization)
+
+### 🔹 Why We Use Lasso Regression  
+- **Feature Selection:** Lasso can shrink some coefficients to **exactly zero**, effectively removing those features from the model. This helps in simplifying models and selecting only the most important predictors.  
+- **Overfitting Prevention:** By reducing the impact of less important features, Lasso helps prevent overfitting and improves model generalization.  
+- **Interpretability:** Models become easier to interpret when irrelevant features are eliminated.  
+
+---
+
+### 🔹 When Does Overfitting Occur?  
+Overfitting happens when a model **memorizes noise** in the training dataset instead of learning the underlying relationships.  
+This typically happens when:  
+- The model is **too complex** (too many features, too much flexibility).  
+- The dataset is **small** compared to the number of features.  
+- The model is trained for **too many epochs/iterations** and adapts to random fluctuations.  
+
+The result is a model that performs **extremely well on training data** but **fails on new, unseen data**.
+
+---
+
+**Definition:**  
+Lasso Regression is a form of **regularized linear regression** that adds an \(L1\) penalty to the cost function.  
+Unlike Ridge, Lasso can **completely eliminate some coefficients**, performing both regularization and feature selection.  
+
+---
+
+### 🔹 Cost Function for Lasso Regression  
+The Lasso cost function modifies the **Linear Regression cost** by adding an \(L1\) penalty term:  
+
+\[
+J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( h_{\theta}(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^{n} |\theta_j|
+\]  
+
+Where:  
+- \(m\) = number of training examples  
+- \(n\) = number of features  
+- \(\theta_j\) = model coefficients (parameters)  
+- \(\lambda\) = regularization parameter controlling penalty strength  
+- Larger \(\lambda\) → more coefficients become zero → simpler model  
+
+---
+
+### 🔹 Key Points:  
+- **Performs feature selection** by setting some coefficients to zero.  
+- Helps in reducing model complexity and avoiding overfitting.  
+- Best used when we suspect that **many features are irrelevant**.  
+- May perform worse than Ridge if **all features are important** because it can eliminate useful ones.  
+
+---
+
+### 🔹 To Avoid Overfitting  
+- Overfitting often occurs when too many irrelevant features influence predictions.  
+- Lasso's \(L1\) penalty removes these unnecessary features automatically.  
+- The **lambda** hyperparameter controls the amount of shrinkage—larger values mean more aggressive feature elimination.  
+
+---
+
+**Example Use Case:**  
+Predicting house prices where many property features are available, but only a few (like location, area, and number of rooms) are truly important. Lasso automatically removes less important features like wall color or garden size.
+
+### 🔹 Ridge vs Lasso – Key Difference  
+- **Ridge Regression (L2 Regularization):** Adds the **square** of the coefficients to the cost function, multiplied by the regularization parameter lambda. Primarily used to **prevent overfitting** by shrinking coefficients, but it does not eliminate features entirely.  
+- **Lasso Regression (L1 Regularization):** Adds the **absolute value** (modulus) of the coefficients to the cost function, multiplied by lambda. Used to **prevent overfitting** and also perform **feature selection** by reducing some coefficients to exactly zero.  
+
