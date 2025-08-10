@@ -1,8 +1,11 @@
 # 🧠 Machine Learning
 
 This repository is a comprehensive showcase of my machine learning work, featuring **end-to-end projects** that start from raw, messy datasets and progress through **data cleaning, feature engineering, algorithm selection** (with clear reasoning for each choice), **model training**, and **evaluation using industry-standard metrics**.
-
 ---
+
+**Note:** The mathematical formulas in this document are based on standard definitions from academic and open-source references.  
+For a deeper understanding, please refer to detailed explanations in the linked resources or official documentation.
+
 
 ## 📌 Prerequisites to Learn ML
 
@@ -149,10 +152,10 @@ Predicting house prices based on size, number of rooms, and location.
 y = mX + c
 \]  
 Where:  
-- \(y\) = predicted value  
-- \(m\) = slope (coefficient)  
-- \(X\) = input feature  
-- \(c\) = intercept (bias term)  
+- (y) = predicted value  
+- (m) = slope (coefficient)  
+- (X) = input feature  
+- (c) = intercept (bias term)  
 ### 📌 Cost Function in Linear Regression  
 
 To find the **best-fit line**, the algorithm adjusts the slope (\(m\)) and intercept (\(c\)) repeatedly over many iterations.  
@@ -167,16 +170,13 @@ To determine the **best-fit line**, we need to measure how far our predicted val
 This is done using the **Cost Function**, also called the **Mean Squared Error (MSE) Cost Function**.
 
 **Formula:**  
-
-\[
-J(θ) = 1/2m *sum_{i=1}^{m} (h(θ)(x^{(i)}) - y^{(i)})^2
-\]
+J(θ) = (1 / 2m) * Σᵢ₌₁ᵐ [ hθ(xᵢ) - yᵢ ]²
 
 Where:  
 - (J(θ)) = cost (error) for parameters (θ) (slope and intercept)  
 - (m) = number of training examples  
-- (h_{θ}(x^{(i)})) = predicted value for the (i)-th input  
-- (y^{(i)}) = actual value for the (i)-th input  
+- hθ(xᵢ) = predicted value for the (i)-th input  
+- (yᵢ) = actual value for the (i)-th input  
 
 **Goal:**  
 - Minimize (J(θ)) so that predictions are as close as possible to the actual values.  
@@ -207,21 +207,17 @@ This process of updating parameters until the cost stops changing significantly 
 
 **Parameter Update Rule (Gradient Descent Formula):**  
 
-\[
-θj := θj - α \frac{\partial J(\θ)}{\partial \θj}
-\]
+θⱼ := θⱼ - α * ( ∂J(θ) / ∂θⱼ )
 
-Where:  
-- \(\theta_j\) = parameter (like slope \(m\) or intercept \(c\)) being updated  
-- \(\alpha\) = learning rate (controls the step size in each iteration)  
-- \(\frac{\partial J(\theta)}{\partial \theta_j}\) = partial derivative of the cost function with respect to \(\theta_j\) (gradient)  
+Where:
+- θⱼ = parameter (like slope `m` or intercept `c`) being updated
+- α = learning rate (controls the step size in each iteration)
+- ∂J(θ) / ∂θⱼ = partial derivative of the cost function with respect to θⱼ (gradient)
 
-**Convergence Condition:**  
+Convergence Condition:
 We stop updating parameters when:
+| J(θ)_previous - J(θ)_current | < ε
 
-\[
-| J(\theta)_{\text{previous}} - J(\theta)_{\text{current}} | < \epsilon
-\]
 
 Where:  
 - α = it is the learning rate where it is should be the small to get the small small steps and it leads to get the global minima easily
@@ -240,44 +236,41 @@ To evaluate how well our Linear Regression model fits the data, we use the follo
 #### 1️⃣ Coefficient of Determination (\(R^2\))  
 
 **Definition:**  
-\(R^2\) measures the proportion of the variance in the dependent variable (\(y\)) that is predictable from the independent variables (\(X\)).  
+R² measures the proportion of the variance in the dependent variable (y) that is predictable from the independent variables (X).
 
-**Formula:**  
-\[
-R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
-\]  
+Formula:
+R² = 1 - [ Σ (yᵢ - ŷᵢ)² / Σ (yᵢ - ȳ)² ]
 
-Where:  
-- \(y_i\) = actual value  
-- \(\hat{y}_i\) = predicted value  
-- \(\bar{y}\) = mean of actual values  
+Where:
+- yᵢ = actual value
+- ŷᵢ = predicted value
+- ȳ = mean of actual values
 
-**Interpretation:**  
-- \(R^2 = 1\) → Perfect fit.  
-- \(R^2 = 0\) → Model does no better than predicting the mean.  
-- Negative \(R^2\) → Model is worse than predicting the mean.
+Interpretation:
+- R² = 1 → Perfect fit.
+- R² = 0 → Model does no better than predicting the mean.
+- Negative R² → Model is worse than predicting the mean.
 
 ---
 
-#### 2️⃣ Adjusted \(R^2\)  
+**Adjusted R²:**
+Definition:
+Adjusted R² modifies R² to account for the number of predictors in the model. It prevents overestimation of performance when adding more features.
 
-**Definition:**  
-Adjusted \(R^2\) modifies \(R^2\) to account for the number of predictors in the model. It prevents overestimation of performance when adding more features.  
+Formula:
+Adjusted R² = 1 - [ (1 - R²) * (n - 1) / (n - k - 1) ]
 
-**Formula:**  
-\[
-\text{Adjusted } R^2 = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - k - 1} \right)
-\]  
+Where:
+- n = number of data points
+- k = number of independent variables (features)
 
-Where:  
-- \(n\) = number of data points  
-- \(k\) = number of independent variables (features)  
+**Why Use It?**
+- R² always increases when more predictors are added, even if they’re irrelevant.
+- Adjusted R² increases only if the new predictor improves the model more than expected by chance.
 
-**Why Use It?**  
-- \(R^2\) always increases when more predictors are added, even if they’re irrelevant.  
-- Adjusted \(R^2\) increases only if the new predictor improves the model more than expected by chance.
+**Example – Why We Use Adjusted R²:**
+Suppose we are predicting room prices. Initially, we use 'size of the room' as a feature. If we add 'location', the price prediction improves — good! But if we then add an irrelevant feature like 'gender of the homeowner', R² will still go up slightly, even though it has nothing to do with the price. Adjusted R² helps detect such useless features by penalizing unnecessary complexity.
 
-**Example – Why We Use Adjusted \(R^2\):**  
 
 Imagine we are predicting the **price of a room**.  
 - Initially, we use **room size** as the only feature → we get a certain \(R^2\) score.  
@@ -286,6 +279,34 @@ Imagine we are predicting the **price of a room**.
 
 This is misleading because irrelevant features should not improve the model.  
 **Adjusted \(R^2\)** solves this problem by penalizing the addition of features that don’t improve the model’s predictive power.
+
+## 📌 Assumptions of Linear Regression  
+
+When using Linear Regression, certain assumptions must be met for the model to produce reliable and accurate results.  
+
+### 1. **Linearity**  
+- The relationship between the independent variables (features) and the dependent variable (target) should be **linear**.  
+- If the relationship is non-linear, the model will not fit well, and predictions may be inaccurate.  
+
+### 2. **Independence of Errors**  
+- The residuals (errors) should be independent of each other.  
+- In time series data, this means there should be no autocorrelation between errors.  
+
+### 3. **Homoscedasticity**  
+- The variance of residuals should be **constant** across all levels of the independent variables.  
+- If the spread of residuals increases or decreases with the predicted values, the model violates this assumption.  
+
+### 4. **Normality of Residuals**  
+- The residuals should be **approximately normally distributed**.  
+- This is important for hypothesis testing and calculating confidence intervals.  
+
+### 5. **No Multicollinearity**  
+- Independent variables should not be highly correlated with each other.  
+- High multicollinearity can make coefficient estimates unstable and inflate standard errors.  
+
+### 6. **No Measurement Errors**  
+- The variables should be measured
+
 
 ---
 
@@ -317,16 +338,15 @@ It is particularly useful when we have **multicollinearity** (high correlation b
 ### 🔹 Cost Function for Ridge Regression  
 The Ridge cost function modifies the **Linear Regression cost** by adding an \(L2\) penalty term:  
 
-\[
-J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( h_{\theta}(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^{n} \theta_j^2
-\]  
+J(θ) = (1 / 2m) * Σ ( hθ(x⁽ⁱ⁾) - y⁽ⁱ⁾ )² + λ * Σ ( θⱼ² )
 
-Where:  
-- \(m\) = number of training examples  
-- \(n\) = number of features  
-- \(\theta_j\) = model coefficients (parameters)  
-- \(\lambda\) = regularization parameter (controls penalty strength)  
-- Larger \(\lambda\) → stronger penalty → smaller coefficients → less complex model  
+Where:
+- m = number of training examples
+- n = number of features
+- θⱼ = model coefficients (parameters)
+- λ = regularization parameter (controls penalty strength)
+- Larger λ → stronger penalty → smaller coefficients → less complex model
+
 
 ---
 
@@ -377,16 +397,15 @@ Unlike Ridge, Lasso can **completely eliminate some coefficients**, performing b
 ### 🔹 Cost Function for Lasso Regression  
 The Lasso cost function modifies the **Linear Regression cost** by adding an \(L1\) penalty term:  
 
-\[
-J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( h_{\theta}(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^{n} |\theta_j|
-\]  
+J(θ) = (1 / 2m) * Σ ( hθ(x⁽ⁱ⁾) - y⁽ⁱ⁾ )² + λ * Σ |θⱼ|
 
-Where:  
-- \(m\) = number of training examples  
-- \(n\) = number of features  
-- \(\theta_j\) = model coefficients (parameters)  
-- \(\lambda\) = regularization parameter controlling penalty strength  
-- Larger \(\lambda\) → more coefficients become zero → simpler model  
+Where:
+- m = number of training examples
+- n = number of features
+- θⱼ = model coefficients (parameters)
+- λ = regularization parameter controlling penalty strength
+- Larger λ → more coefficients become zero → simpler model
+
 
 ---
 
@@ -412,3 +431,83 @@ Predicting house prices where many property features are available, but only a f
 - **Ridge Regression (L2 Regularization):** Adds the **square** of the coefficients to the cost function, multiplied by the regularization parameter lambda. Primarily used to **prevent overfitting** by shrinking coefficients, but it does not eliminate features entirely.  
 - **Lasso Regression (L1 Regularization):** Adds the **absolute value** (modulus) of the coefficients to the cost function, multiplied by lambda. Used to **prevent overfitting** and also perform **feature selection** by reducing some coefficients to exactly zero.  
 
+## 📌 Logistic Regression
+
+### 🔹 Why We Use Logistic Regression Instead of Linear Regression  
+- **Linear Regression** works well for continuous outputs but fails for classification problems because:
+  1. Predictions can go beyond the range [0, 1], which doesn’t make sense for probabilities.
+  2. The relationship between the features and the probability is **non-linear**, but Linear Regression assumes linearity.
+  3. Linear Regression cost function for classification problems is **non-convex**, which can trap optimization algorithms in local minima.
+
+- **Logistic Regression** solves these issues by:
+  - Mapping outputs to a **probability range (0 to 1)** using the **Sigmoid Function**.
+  - Producing a **convex cost function**, making optimization easier and more reliable.
+
+---
+
+### 🔹 The Sigmoid Function (Logistic Function)  
+The Sigmoid function transforms any real number into a range between 0 and 1:
+
+hθ(x) = 1 / (1 + e^(-θᵀx))
+
+Where:
+- hθ(x) = predicted probability that y = 1
+- θ = model parameters
+- x = input features
+- e = Euler’s number (~2.718)
+
+
+The output can be interpreted as:
+- Close to **1** → strong likelihood of belonging to class 1  
+- Close to **0** → strong likelihood of belonging to class 0  
+
+---
+
+### 🔹 Logistic Regression Cost Function – Why Not Use the Squared Error?  
+If we used the **Mean Squared Error (MSE)** for classification:
+
+J(θ) = (1 / 2m) * Σ ( hθ(x⁽ⁱ⁾) - y⁽ⁱ⁾ )²
+
+This produces a non-convex cost function for classification, making gradient descent unreliable.
+
+
+### 🔹 Logistic Regression Cost Function (Log Loss)  
+Instead, we use **Log Loss**, which is convex:
+
+J(θ) = - (1 / m) * Σ [ y⁽ⁱ⁾ * log(hθ(x⁽ⁱ⁾)) + (1 - y⁽ⁱ⁾) * log(1 - hθ(x⁽ⁱ⁾)) ]
+
+Where:
+- If y = 1 → only the first term matters.
+- If y = 0 → only the second term matters.
+- Log Loss penalizes confident but wrong predictions heavily.
+
+---
+
+### 🔹 Performance Evaluation – Confusion Matrix  
+The **Confusion Matrix** is a table that helps evaluate the performance of a classification model by comparing predicted vs. actual values.
+
+|                | Predicted Positive | Predicted Negative |
+|----------------|-------------------|-------------------|
+| **Actual Positive** | True Positive (TP)   | False Negative (FN)  |
+| **Actual Negative** | False Positive (FP)  | True Negative (TN)   |
+
+#### Meaning:
+- **TP (True Positive):** Model correctly predicts positive class.  
+- **TN (True Negative):** Model correctly predicts negative class.  
+- **FP (False Positive):** Model predicts positive when it’s actually negative (Type I Error).  
+- **FN (False Negative):** Model predicts negative when it’s actually positive (Type II Error).
+
+---
+
+### 🔹 Metrics Derived from Confusion Matrix:
+1. **Accuracy** – Overall correctness of the model:  
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+2. **Precision** – Of all predicted positives, how many are correct:  
+Precision = TP / (TP + FP)
+
+3. **Recall (Sensitivity)** – Of all actual positives, how many did we correctly predict:  
+Recall = TP / (TP + FN)
+
+4. **F1 Score** – Harmonic mean of Precision and Recall:  
+F1 = 2 * (Precision * Recall) / (Precision + Recall)
