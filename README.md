@@ -511,3 +511,111 @@ Recall = TP / (TP + FN)
 
 4. **F1 Score** – Harmonic mean of Precision and Recall:  
 F1 = 2 * (Precision * Recall) / (Precision + Recall)
+
+## 📌 Naive Bayes
+
+### 🔹 First, What’s Bayes’ Theorem?
+Before talking about Naive Bayes, we need to know Bayes’ Theorem.  
+It’s basically a formula that helps us figure out the probability of something happening, based on some other thing we already know.
+
+**Simple Example:**  
+If it’s cloudy outside, there’s a higher chance it might rain.  
+Bayes’ Theorem is a way of calculating that chance using math.
+
+**Formula:**
+P(A|B) = [ P(B|A) * P(A) ] / P(B)  
+
+Where:  
+- **P(A|B)** → Probability of A happening given that B is true.  
+- **P(B|A)** → Probability of B happening given that A is true.  
+- **P(A)** → Probability of A happening (overall).  
+- **P(B)** → Probability of B happening (overall).  
+
+---
+
+### 🔹 Why “Naive” Bayes?
+The “Naive” part comes from the assumption it makes — it assumes that **all the features are independent** from each other.  
+In real life, this is not always true, but surprisingly, this simple assumption works really well in many cases.
+
+---
+
+### 🔹 Why Do We Use Naive Bayes?
+- It’s **super fast** to train compared to other algorithms.  
+- Works great for **text classification** problems like spam detection, sentiment analysis, etc.  
+- Even with small amounts of training data, it can still give good results.  
+
+---
+
+**Example Use Case:**  
+If we want to classify whether an email is spam or not, we can look at the words inside the email.  
+Naive Bayes will check the probability of “spam” given the words, and probability of “not spam” given the words, and choose whichever is higher.
+
+## 📌 K-Nearest Neighbors (KNN)
+
+### 🔹 What is KNN?
+KNN stands for **K-Nearest Neighbors**.  
+It’s one of the simplest algorithms out there — it doesn’t try to “learn” any complicated rules.  
+Instead, when you give it something new to predict, it just looks at the **K closest data points** from the training data and decides based on them.
+
+Think of it like asking your neighbors for advice — if most of your neighbors think something is true, you’ll probably go with that answer.
+
+---
+
+### 🔹 Why Do We Use KNN?
+- **Easy to understand** – no heavy math during training.  
+- **Versatile** – works for both classification (labels) and regression (numbers).  
+- **No training phase** – it’s called a “lazy learner” because it waits until it actually needs to make a prediction before doing the work.  
+
+---
+
+### 🔹 KNN for Classification
+When predicting a **category** (like spam/not spam, pass/fail, disease/no disease):  
+1. Pick a value for **K** (number of neighbors to check).  
+2. Find the K closest points to the new data point.  
+3. See which category most of those points belong to.  
+4. Assign that category to the new data point.
+
+#### 📏 Distance Measures in Classification
+Since KNN relies on **closeness**, we need a way to measure distance between points.  
+The most common ones are:
+
+1. **Euclidean Distance** – The straight-line distance between two points.  
+   Formula:  
+   d = sqrt( (x1 - y1)² + (x2 - y2)² + ... + (xn - yn)² )  
+   Good when your features are continuous (like height, weight, temperature).
+
+2. **Manhattan Distance** – The distance you’d travel if you could only move along a grid (like streets in a city).  
+   Formula:  
+   d = |x1 - y1| + |x2 - y2| + ... + |xn - yn|  
+   Useful when movement is more “step-like” or when features are not continuous.
+
+
+**Example:**  
+If 3 out of your 5 nearest neighbors say “cat” and 2 say “dog,” the prediction will be “cat.”
+
+---
+
+### 🔹 KNN for Regression
+When predicting a **number** (like house price, temperature, or score):  
+1. Find the K closest points to the new data point.  
+2. Take the **average** (or weighted average) of their values.  
+3. Use that as the prediction.
+
+**Example:**  
+If your 3 nearest neighbors have house prices $200k, $220k, and $210k, the prediction will be about $210k.
+
+---
+
+### 🔹 Things to Keep in Mind
+- Choosing **K** is important — too small and it can be noisy, too big and it might miss important details.  
+- KNN can be **slow for large datasets** because it needs to look at all points every time.  
+- Works best when data is scaled (because distance matters a lot).  
+
+---
+
+**Example Use Cases:**  
+- **Classification:** Handwritten digit recognition, spam filtering, recommendation systems.  
+- **Regression:** Predicting house prices, weather forecasting.
+
+**Disadvantage**
+- It works bad when there is a outlier and imbalanced Data
