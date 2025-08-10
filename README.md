@@ -131,5 +131,161 @@ Unsupervised learning works with **unlabeled data**, focusing on pattern discove
 
 #### **2. Cluster Evaluation Metrics**  
 - Silhouette Score
+## 📈 Linear Regression  
 
+**Definition:**  
+Linear Regression is a supervised learning algorithm used for **predicting continuous values** by finding the **best-fit line** through the data points.
+
+**Main Idea:**  
+- The **best-fit line** is the one where the difference between the **actual data points** and the **predicted points** is as small as possible.  
+- This difference is called the **error** or **residual**.  
+- In Linear Regression, we aim to **minimize the sum of squared errors** (Least Squares Method).  
+
+**Example:**  
+Predicting house prices based on size, number of rooms, and location.
+
+**Key Formula:**  
+\[
+y = mX + c
+\]  
+Where:  
+- \(y\) = predicted value  
+- \(m\) = slope (coefficient)  
+- \(X\) = input feature  
+- \(c\) = intercept (bias term)  
+### 📌 Cost Function in Linear Regression  
+
+To find the **best-fit line**, the algorithm adjusts the slope (\(m\)) and intercept (\(c\)) repeatedly over many iterations.  
+Instead of guessing randomly, we use a **Cost Function** to measure how far our predictions are from the actual values.
+
+**Definition:**  
+The **Cost Function** tells us *how wrong* our model’s predictions are. In Linear Regression, we typically use the **Mean Squared Error (MSE)**:
+
+### 📌 Cost Function in Linear Regression  
+
+To determine the **best-fit line**, we need to measure how far our predicted values are from the actual values.  
+This is done using the **Cost Function**, also called the **Mean Squared Error (MSE) Cost Function**.
+
+**Formula:**  
+
+\[
+J(θ) = 1/2m *sum_{i=1}^{m} (h(θ)(x^{(i)}) - y^{(i)})^2
+\]
+
+Where:  
+- (J(θ)) = cost (error) for parameters (θ) (slope and intercept)  
+- (m) = number of training examples  
+- (h_{θ}(x^{(i)})) = predicted value for the (i)-th input  
+- (y^{(i)}) = actual value for the (i)-th input  
+
+**Goal:**  
+- Minimize (J(θ)) so that predictions are as close as possible to the actual values.  
+- Optimization algorithms like **Gradient Descent** are used to update parameters (θ) and achieve the minimum cost.
+
+It is challenging to minimize the cost function because it often requires many iterations.  
+In the process of optimization, the parameters move step-by-step from a high point on the graph (global maxima or local maxima) toward the lowest point (global minima).  
+This gradual process leads us to the next important concept — **Convergence**.
+
+**Why Do We Need Convergence?**  
+When training a model using Gradient Descent, the parameters (θ) are updated over **many iterations**.  
+If we keep updating forever, the process will waste time and computational resources without improving the model.  
+We need a stopping point — a condition where we say:  
+> “The cost function is no longer decreasing enough to make a meaningful difference.”
+
+This stopping point is called **Convergence**.  
+By detecting convergence, we:
+- Save computation time.  
+- Avoid overfitting by not over-optimizing.  
+- Ensure the model has reached its **best possible parameters** for the given data.
+
+### 📌 Convergence in Gradient Descent  
+
+After defining the **Cost Function**, we need a way to **minimize it**.  
+We use an optimization technique called **Gradient Descent**, where the parameters (θ) are updated step-by-step to move from a **higher cost** (global maxima or local maxima) towards the **lowest possible cost** (global minima).
+
+This process of updating parameters until the cost stops changing significantly is called **Convergence**.
+
+**Parameter Update Rule (Gradient Descent Formula):**  
+
+\[
+θj := θj - α \frac{\partial J(\θ)}{\partial \θj}
+\]
+
+Where:  
+- \(\theta_j\) = parameter (like slope \(m\) or intercept \(c\)) being updated  
+- \(\alpha\) = learning rate (controls the step size in each iteration)  
+- \(\frac{\partial J(\theta)}{\partial \theta_j}\) = partial derivative of the cost function with respect to \(\theta_j\) (gradient)  
+
+**Convergence Condition:**  
+We stop updating parameters when:
+
+\[
+| J(\theta)_{\text{previous}} - J(\theta)_{\text{current}} | < \epsilon
+\]
+
+Where:  
+- α = it is the learning rate where it is should be the small to get the small small steps and it leads to get the global minima easily
+
+**Goal:**  
+- Start from an initial guess of parameters.  
+- Take steps in the direction where the cost decreases the fastest (negative gradient).  
+- Stop when further updates no longer improve the model significantly → this point is **convergence**.
+
+### 📊 Performance Metrics for Linear Regression  
+
+To evaluate how well our Linear Regression model fits the data, we use the following metrics:  
+
+---
+
+#### 1️⃣ Coefficient of Determination (\(R^2\))  
+
+**Definition:**  
+\(R^2\) measures the proportion of the variance in the dependent variable (\(y\)) that is predictable from the independent variables (\(X\)).  
+
+**Formula:**  
+\[
+R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
+\]  
+
+Where:  
+- \(y_i\) = actual value  
+- \(\hat{y}_i\) = predicted value  
+- \(\bar{y}\) = mean of actual values  
+
+**Interpretation:**  
+- \(R^2 = 1\) → Perfect fit.  
+- \(R^2 = 0\) → Model does no better than predicting the mean.  
+- Negative \(R^2\) → Model is worse than predicting the mean.
+
+---
+
+#### 2️⃣ Adjusted \(R^2\)  
+
+**Definition:**  
+Adjusted \(R^2\) modifies \(R^2\) to account for the number of predictors in the model. It prevents overestimation of performance when adding more features.  
+
+**Formula:**  
+\[
+\text{Adjusted } R^2 = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - k - 1} \right)
+\]  
+
+Where:  
+- \(n\) = number of data points  
+- \(k\) = number of independent variables (features)  
+
+**Why Use It?**  
+- \(R^2\) always increases when more predictors are added, even if they’re irrelevant.  
+- Adjusted \(R^2\) increases only if the new predictor improves the model more than expected by chance.
+
+**Example – Why We Use Adjusted \(R^2\):**  
+
+Imagine we are predicting the **price of a room**.  
+- Initially, we use **room size** as the only feature → we get a certain \(R^2\) score.  
+- Then, we add **location** as a feature → since location strongly affects price, \(R^2\) increases meaningfully.  
+- Next, we add **gender of the occupant** as a feature → even though it has **no actual relationship** to room price, \(R^2\) will still increase slightly (because \(R^2\) never decreases when adding more features).  
+
+This is misleading because irrelevant features should not improve the model.  
+**Adjusted \(R^2\)** solves this problem by penalizing the addition of features that don’t improve the model’s predictive power.
+
+---
 
